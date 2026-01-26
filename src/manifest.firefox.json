@@ -1,0 +1,24 @@
+{
+	"manifest_version": 3,
+	"name": "Mute Cricket Ads",
+	"version": "0.1.0",
+	"description": "Browser extentsion for muting ads during cricket match.",
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"options_page": "options.html",
+	"permissions": [
+		"webRequest",
+		"storage",
+		"tabs"
+	],
+	"host_permissions": [
+		"*://*.hotstar.com/*"
+	],
+	"background": {
+		"type": "module",
+		"scripts": [
+			"ServiceWorker.js"
+		]
+	}
+}
