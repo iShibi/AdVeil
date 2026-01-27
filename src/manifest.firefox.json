@@ -2,14 +2,22 @@
 	"manifest_version": 3,
 	"name": "Mute Cricket Ads",
 	"version": "0.1.0",
-	"description": "Browser extentsion for muting ads during cricket match.",
+	"description": "Browser extentsion for muting ads during cricket match on JioHotstar.",
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "mute-cricket-ads@iShibi",
+			"data_collection_permissions": {
+				"required": [
+					"none"
+				]
+			}
+		}
+	},
 	"action": {
 		"default_popup": "popup.html"
 	},
-	"options_page": "options.html",
 	"permissions": [
 		"webRequest",
-		"storage",
 		"tabs"
 	],
 	"host_permissions": [

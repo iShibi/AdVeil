@@ -2,7 +2,7 @@
 	"name": "mute-cricket-ads",
 	"version": "0.1.0",
 	"private": true,
-	"description": "Browser extentsion for muting ads during cricket match.",
+	"description": "Browser extentsion for muting ads during cricket match on JioHotstar.",
 	"author": {
 		"name": "Shubham Parihar",
 		"email": "shubhamparihar391@gmail.com",
