@@ -11,9 +11,9 @@
 	"scripts": {
 		"clean-dist": "zx ./scripts/delete.mjs",
 		"compile-tw": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css",
-		"compile-src": "tsc",
-		"copy-static": "zx ./scripts/copy.mjs",
-		"build": "npm run clean-dist && npm run compile-tw && npm run compile-src && npm run copy-static"
+		"compile-ts": "tsc",
+		"copy-to-dist": "zx ./scripts/copy.mjs",
+		"build": "npm run clean-dist && npm run compile-tw && npm run compile-ts && npm run copy-to-dist"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",

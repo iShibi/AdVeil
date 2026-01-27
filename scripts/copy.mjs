@@ -15,7 +15,7 @@ for (const browser of ['chrome', 'firefox']) {
 				const sourceFilePath = path.join(sourceDir, file);
 				const destinationFilePath = path.join(destinationDir, 'manifest.json');
 				await fs.copyFile(sourceFilePath, destinationFilePath);
-				console.log(`Copied: manifest.json`);
+				console.log(`[${browser}] Copied: manifest.json`);
 			} else {
 				continue;
 			}
@@ -23,7 +23,7 @@ for (const browser of ['chrome', 'firefox']) {
 			const sourceFilePath = path.join(sourceDir, file);
 			const destinationFilePath = path.join(destinationDir, file);
 			await fs.copyFile(sourceFilePath, destinationFilePath);
-			console.log(`Copied: ${file}`);
+			console.log(`[${browser}] Copied: ${file}`);
 		}
 	}
 }
