@@ -11,8 +11,8 @@ function copyManifestPlugin() {
 	return {
 		name: 'copy-manifest',
 		async writeBundle() {
-			const srcPath = resolve(__dirname, 'src/manifest.chrome.json'); // Source file in project root
-			const destPath = resolve('dist/chrome/manifest.json'); // Target in dist/
+			const srcPath = resolve(__dirname, 'src/manifest.chrome.json');
+			const destPath = resolve('dist/chrome/manifest.json');
 
 			try {
 				const content = await readFile(srcPath, 'utf8');

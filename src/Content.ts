@@ -1,4 +1,4 @@
-console.log("[Content] Loaded 'mute-cricket-ads' content script.");
+console.log("[Content] Loaded 'AdVeil' browser extension content script.");
 
 interface AdPlaybackStatus {
 	adPlaying: boolean;

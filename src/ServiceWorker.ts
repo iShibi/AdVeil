@@ -1,7 +1,7 @@
-console.log('[BACKGROUND] Loaded "mute-cricket-ads" browser extension ServiceWorker.');
+console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
 
 let latestAdName = '';
-const muteDurationEndBuffer = 100;
+const muteDurationEndBuffer = 500;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
 
@@ -26,7 +26,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 				latestAdName = adName;
 				setTimeout(
 					() => {
-						// Skip unmuting if another ad has started.
+						// Skip unmuting and unbluring if another ad has started.
 						if (adName === latestAdName) {
 							chrome.tabs.update(cricketTab.id, { muted: false });
 							chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: false });

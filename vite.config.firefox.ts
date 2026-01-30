@@ -11,8 +11,8 @@ function copyManifestPlugin() {
 	return {
 		name: 'copy-manifest',
 		async writeBundle() {
-			const srcPath = resolve(__dirname, 'src/manifest.firefox.json'); // Source file in project root
-			const destPath = resolve('dist/firefox/manifest.json'); // Target in dist/
+			const srcPath = resolve(__dirname, 'src/manifest.firefox.json');
+			const destPath = resolve('dist/firefox/manifest.json');
 
 			try {
 				const content = await readFile(srcPath, 'utf8');

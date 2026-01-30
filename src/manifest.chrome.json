@@ -1,8 +1,8 @@
 {
 	"manifest_version": 3,
-	"name": "Mute Cricket Ads",
+	"name": "AdVeil",
 	"version": "0.1.0",
-	"description": "Browser extentsion for muting ads during cricket match on JioHotstar.",
+	"description": "Mute and blur ads on JioHotstar for a cleaner cricket experience.",
 	"action": {
 		"default_popup": "src/popup/popup.html"
 	},

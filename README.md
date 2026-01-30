@@ -1,3 +1,3 @@
-# mute-cricket-ads
+# AdVeil
 
-> Browser extentsion for muting ads during cricket match on JioHotstar.
+> Mute and blur ads on JioHotstar for a cleaner cricket experience.
