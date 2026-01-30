@@ -19,11 +19,15 @@
 	"[typescript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
 	"json.schemas": [
 		{
-			"fileMatch": [
-				"manifest.*.json"
-			],
+			"fileMatch": ["manifest.*.json"],
 			"url": "https://json.schemastore.org/chrome-manifest.json"
 		}
 	],

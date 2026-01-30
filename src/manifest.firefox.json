@@ -7,36 +7,23 @@
 		"gecko": {
 			"id": "mute-cricket-ads@iShibi",
 			"data_collection_permissions": {
-				"required": [
-					"none"
-				]
+				"required": ["none"]
 			}
 		}
 	},
 	"action": {
-		"default_popup": "popup.html"
+		"default_popup": "src/popup/popup.html"
 	},
-	"permissions": [
-		"webRequest",
-		"tabs"
-	],
-	"host_permissions": [
-		"*://*.hotstar.com/*"
-	],
+	"permissions": ["webRequest", "storage", "tabs"],
+	"host_permissions": ["*://*.hotstar.com/*"],
 	"background": {
 		"type": "module",
-		"scripts": [
-			"ServiceWorker.js"
-		]
+		"scripts": ["ServiceWorker.js"]
 	},
 	"content_scripts": [
 		{
-			"js": [
-				"Content.js"
-			],
-			"matches": [
-				"*://*.hotstar.com/*"
-			]
+			"js": ["Content.js"],
+			"matches": ["*://*.hotstar.com/*"]
 		}
 	]
 }

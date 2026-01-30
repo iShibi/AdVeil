@@ -9,24 +9,35 @@
 		"url": "https://github.com/iShibi"
 	},
 	"scripts": {
-		"clean-dist": "zx ./scripts/delete.mjs",
-		"compile-tw": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css",
-		"compile-ts": "tsc",
-		"copy-to-dist": "zx ./scripts/copy.mjs",
-		"build": "npm run clean-dist && npm run compile-tw && npm run compile-ts && npm run copy-to-dist"
+		"build:firefox": "tsc -b && vite build --config vite.config.firefox.ts",
+		"build:chrome": "tsc -b && vite build --config vite.config.chrome.ts",
+		"build:all": "npm run build:firefox && npm run build:chrome",
+		"lint": "eslint .",
+		"format:check": "prettier . --check",
+		"format:write": "prettier . --write"
+	},
+	"dependencies": {
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
 	},
 	"devDependencies": {
+		"@tailwindcss/vite": "^4.1.18",
+		"tailwindcss": "^4.1.18",
 		"@eslint/js": "^9.39.2",
-		"@tailwindcss/cli": "^4.1.18",
+		"@types/node": "^24.10.1",
+		"@types/react": "^19.2.5",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^5.1.1",
 		"@types/chrome": "^0.1.36",
 		"eslint": "^9.39.2",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint-plugin-react-refresh": "^0.4.24",
 		"eslint-config-prettier": "^10.1.8",
 		"globals": "^17.1.0",
 		"prettier": "3.8.1",
-		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.53.1",
-		"zx": "^8.8.5"
+		"vite": "^7.2.4"
 	},
 	"type": "module",
 	"license": "MIT"

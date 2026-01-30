@@ -4,17 +4,18 @@
 	"version": "0.1.0",
 	"description": "Browser extentsion for muting ads during cricket match on JioHotstar.",
 	"action": {
-		"default_popup": "popup.html"
+		"default_popup": "src/popup/popup.html"
 	},
-	"permissions": [
-		"webRequest",
-		"tabs"
-	],
-	"host_permissions": [
-		"*://*.hotstar.com/*"
-	],
+	"permissions": ["webRequest", "storage", "tabs"],
+	"host_permissions": ["*://*.hotstar.com/*"],
 	"background": {
-		"service_worker": "ServiceWorker.js",
-		"type": "module"
-	}
+		"type": "module",
+		"service_worker": "ServiceWorker.js"
+	},
+	"content_scripts": [
+		{
+			"js": ["Content.js"],
+			"matches": ["*://*.hotstar.com/*"]
+		}
+	]
 }

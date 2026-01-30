@@ -1,18 +1,32 @@
 import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default [
-	{ ignores: ['dist/'] },
+import { defineConfig, globalIgnores } from 'eslint/config';
+
+export default defineConfig([
+	globalIgnores(['dist']),
 	{
-		files: ['**/*.{js,mjs,cjs,ts}'],
+		files: ['src/*.{tsx}'],
+		extends: [
+			pluginJs.configs.recommended,
+			tseslint.configs.recommended,
+			reactHooks.configs.flat.recommended,
+			reactRefresh.configs.vite,
+			eslintConfigPrettier,
+		],
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.webextensions },
 		},
 	},
-	{ files: ['**/scripts/*.mjs'], languageOptions: { globals: globals.node } },
-	pluginJs.configs.recommended,
-	...tseslint.configs.recommended,
-	eslintConfigPrettier,
-];
+	{
+		files: ['src/*.{ts}'],
+		extends: [pluginJs.configs.recommended, tseslint.configs.recommended, eslintConfigPrettier],
+		languageOptions: {
+			globals: { ...globals.browser, ...globals.webextensions },
+		},
+	},
+]);
