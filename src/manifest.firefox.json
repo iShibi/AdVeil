@@ -28,5 +28,15 @@
 		"scripts": [
 			"ServiceWorker.js"
 		]
-	}
+	},
+	"content_scripts": [
+		{
+			"js": [
+				"Content.js"
+			],
+			"matches": [
+				"*://*.hotstar.com/*"
+			]
+		}
+	]
 }
