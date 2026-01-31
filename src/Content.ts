@@ -1,19 +1,25 @@
 console.log("[Content] Loaded 'AdVeil' browser extension content script.");
 
+export interface LocalStorage {
+	blurValue: number | undefined;
+	fadeValue: number | undefined;
+}
+
+async function init() {
+	const { blurValue, fadeValue } = await chrome.storage.local.get<LocalStorage>(['blurValue', 'fadeValue']);
+	document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
+	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+}
+init();
+
 interface AdPlaybackStatus {
 	adPlaying: boolean;
 }
 
 async function toggleAdBlurring(message: AdPlaybackStatus) {
-	// const shouldBlur = document.location.href.includes('live');
-
 	if (message.adPlaying) {
 		const videoElement = document.getElementById('video-container')!;
-		const { blurValue, fadeValue } = await chrome.storage.local.get<{ [key: string]: number }>([
-			'blurValue',
-			'fadeValue',
-		]);
-		videoElement.style = `filter: blur(${blurValue}px) opacity(${100 - fadeValue}%)`;
+		videoElement.style = `filter: blur(var(--blur-value)) opacity(var(--opacity-value))`;
 	} else {
 		const videoElement = document.getElementById('video-container')!;
 		videoElement.style = 'filter: blur(0px) opacity(100%)';
@@ -22,17 +28,12 @@ async function toggleAdBlurring(message: AdPlaybackStatus) {
 
 chrome.runtime.onMessage.addListener(toggleAdBlurring);
 
-// For testing the blur and fade sliders:
-// async function test() {
-// 	const videoElement = document.getElementById('video-container')!;
-// 	const { blurValue, fadeValue } = await chrome.storage.local.get<{ [key: string]: number }>([
-// 		'blurValue',
-// 		'fadeValue',
-// 	]);
-// 	videoElement.style = `filter: blur(${blurValue}px) opacity(${100 - fadeValue}%)`;
-// 	// videoElement.style = ``;
-// }
+async function updateFilterValues() {
+	const { blurValue, fadeValue } = await chrome.storage.local.get<LocalStorage>(['blurValue', 'fadeValue']);
+	document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
+	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+}
 
-// chrome.storage.local.onChanged.addListener(() => {
-// 	test();
-// });
+chrome.storage.local.onChanged.addListener(() => {
+	updateFilterValues();
+});

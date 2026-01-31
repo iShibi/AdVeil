@@ -18,34 +18,38 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 	}, [fadeValue]);
 
 	return (
-		<div>
-			<h1 className="text-2xl font-extrabold font-mono">AdVeil</h1>
-			<div className="flex flex-row gap-x-2">
-				<label htmlFor="blur-value">Blur:</label>
-				<input
-					type="range"
-					name="blur-value"
-					id="blur-value"
-					min={0}
-					max={100}
-					value={blurValue}
-					onChange={e => setBlurValue(parseInt(e.target.value))}
-				/>
+		<div className="w-full">
+			<h1 className="text-2xl font-extrabold font-mono pb-5 px-2">AdVeil</h1>
+
+			<div className="grid grid-cols-1 gap-y-2 text-base font-mono px-2">
+				<label htmlFor="blur-value">
+					<span>Blur: {blurValue}</span>
+					<input
+						type="range"
+						name="blur-value"
+						id="blur-value"
+						min={0}
+						max={100}
+						value={blurValue}
+						onChange={e => setBlurValue(parseInt(e.target.value))}
+						className="w-full hover:cursor-pointer"
+					/>
+				</label>
+
+				<label htmlFor="fade-value">
+					<span>Fade: {fadeValue}</span>
+					<input
+						type="range"
+						name="fade-value"
+						id="fade-value"
+						min={0}
+						max={100}
+						value={fadeValue}
+						onChange={e => setFadeValue(parseInt(e.target.value))}
+						className="w-full hover:cursor-pointer"
+					/>
+				</label>
 			</div>
-			<h1>{blurValue}</h1>
-			<div className="flex flex-row gap-x-2">
-				<label htmlFor="fade-value">Fade:</label>
-				<input
-					type="range"
-					name="fade-value"
-					id="fade-value"
-					min={0}
-					max={100}
-					value={fadeValue}
-					onChange={e => setFadeValue(parseInt(e.target.value))}
-				/>
-			</div>
-			<h1>{fadeValue}</h1>
 		</div>
 	);
 }
