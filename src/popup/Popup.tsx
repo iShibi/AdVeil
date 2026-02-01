@@ -23,7 +23,7 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 	return (
 		<div className="w-full h-full flex flex-col gap-y-6 select-none">
 			<div className="flex flex-row pl-6 pt-4 items-center gap-x-2">
-				<img src={icon64} alt="AdVeil-icon64" className="w-8 h-8" />
+				<img src={icon64} alt="AdVeil-icon64" className="w-6 h-6" />
 				<h1 className="text-lg font-extrabold font-mono">AdVeil</h1>
 			</div>
 
