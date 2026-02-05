@@ -29,9 +29,12 @@ jobs:
       - name: Package release assets
         run: |
           VERSION="${GITHUB_REF#refs/tags/}"
-          cd dist
-          zip -r "chrome-${VERSION}.zip" chrome
-          zip -r "firefox-${VERSION}.zip" firefox
+
+          cd dist/chrome
+          zip -r "../chrome-${VERSION}.zip" .
+
+          cd ../firefox
+          zip -r "../firefox-${VERSION}.zip" .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
