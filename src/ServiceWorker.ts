@@ -1,7 +1,7 @@
 console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
 
 let latestAdName = '';
-const muteDurationEndBuffer = 500;
+const muteDurationEndBuffer = 150;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
 
@@ -21,7 +21,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 				const duration = adName.match(adNameRegex)?.[1];
 				if (!duration) return console.log('Unable to parse ad duration.');
 				const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-				await chrome.tabs.update(cricketTab.id, { muted: true });
+				chrome.tabs.update(cricketTab.id, { muted: true });
 				chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: true });
 				latestAdName = adName;
 				setTimeout(
