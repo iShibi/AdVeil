@@ -45,5 +45,6 @@ jobs:
             dist/AdVeil-*-chrome.zip
             dist/AdVeil-*-edge.zip
             dist/AdVeil-*-firefox.zip
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
