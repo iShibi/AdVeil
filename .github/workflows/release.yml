@@ -12,20 +12,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - run: npm ci
-      - run: npm run build:all
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Create Release
+      - name: Build all targets
+        run: npm run build:all
+
+      - name: Package release assets
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/}"
+          cd dist
+          zip -r "chrome-${VERSION}.zip" chrome
+          zip -r "firefox-${VERSION}.zip" firefox
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/chrome/**
-            dist/firefox/**
+            dist/chrome-*.zip
+            dist/firefox-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
