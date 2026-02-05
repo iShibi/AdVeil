@@ -17,11 +17,10 @@ interface AdPlaybackStatus {
 }
 
 async function toggleAdBlurring(message: AdPlaybackStatus) {
+	const videoElement = document.getElementById('video-container')!;
 	if (message.adPlaying) {
-		const videoElement = document.getElementById('video-container')!;
 		videoElement.style = `filter: blur(var(--blur-value)) opacity(var(--opacity-value))`;
 	} else {
-		const videoElement = document.getElementById('video-container')!;
 		videoElement.style = 'filter: blur(0px) opacity(100%)';
 	}
 }
