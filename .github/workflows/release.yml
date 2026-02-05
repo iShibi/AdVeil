@@ -31,16 +31,19 @@ jobs:
           VERSION="${GITHUB_REF#refs/tags/}"
 
           cd dist/chrome
-          zip -r "../chrome-${VERSION}.zip" .
+          zip -r "../AdVeil-${VERSION}-chrome.zip" .
+
+          zip -r "../AdVeil-${VERSION}-edge.zip" .
 
           cd ../firefox
-          zip -r "../firefox-${VERSION}.zip" .
+          zip -r "../AdVeil-${VERSION}-firefox.zip" .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/chrome-*.zip
-            dist/firefox-*.zip
+            dist/AdVeil-*-chrome.zip
+            dist/AdVeil-*-edge.zip
+            dist/AdVeil-*-firefox.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
