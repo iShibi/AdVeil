@@ -8,7 +8,7 @@ AdVeil browser extension is designed for cricket fans who stream matches on [Jio
 
 AdVeil extension does not send any data out of your device. User settings are stored locally in the browser storage.
 
-## Installation on Mozilla Firefox
+### Installation on Mozilla Firefox
 
 #### Install from Firefox Add-ons (Recommended)
 
@@ -19,7 +19,7 @@ AdVeil extension does not send any data out of your device. User settings are st
 
 #### Install from GitHub Releases
 
-> ❗ Firefox removes locally loaded add-ons when browser is closed. Use this method only if the latest release version is not available on Firefox add-ons.
+> ❗ Firefox removes locally loaded add-ons when browser is closed.
 
 1. Download the Extension from the [Releases](https://github.com/iShibi/AdVeil/releases) page.
 2. Extract the downloaded ZIP file to a folder on your computer.
@@ -33,7 +33,7 @@ AdVeil extension does not send any data out of your device. User settings are st
 6. AdVeil is now installed.
 7. Pin it to the toolbar for quick access.
 
-## Installation on Google Chrome or Microsoft Edge
+### Installation on Google Chrome or Microsoft Edge
 
 1. Download the Extension from the [Releases](https://github.com/iShibi/AdVeil/releases) page.
 2. Extract the downloaded ZIP file to a folder on your computer.
