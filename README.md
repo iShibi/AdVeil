@@ -8,7 +8,7 @@ AdVeil browser extension is designed for cricket fans who stream matches on [Jio
 
 #### Install from Firefox Add-ons (Recommended)
 
-1. Go to AdVeil add-on page: https://addons.mozilla.org/en-US/firefox/addon/adveil/
+1. Go to AdVeil add-on page: https://addons.mozilla.org/addon/adveil
 2. Click **Add to Firefox**.
 3. Review the permissions and click **Add** to confirm.
 4. When prompted select **Pin extension to toolbar** and click **OK**.
