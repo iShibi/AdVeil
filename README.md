@@ -23,9 +23,7 @@ AdVeil extension does not send any data out of your device. User settings are st
 
 1. Download the Extension from the [Releases](https://github.com/iShibi/AdVeil/releases) page.
 2. Extract the downloaded ZIP file to a folder on your computer.
-
    > ⚠️ Do **NOT** delete this extracted folder after installation, browser loads the extension from here.
-
 3. Paste the following url in browser's search bar and press enter: `about:debugging#/runtime/this-firefox`
 4. Click **Load Temporary Add-on**.
 5. Select the **manifest.json** file inside the extracted folder.
@@ -36,9 +34,7 @@ AdVeil extension does not send any data out of your device. User settings are st
 
 1. Download the Extension from the [Releases](https://github.com/iShibi/AdVeil/releases) page.
 2. Extract the downloaded ZIP file to a folder on your computer.
-
    > ⚠️ Do **NOT** delete this extracted folder after installation, browser loads the extension from here.
-
 3. Paste the following url in browser's search bar and press enter:
 
 - Google Chrome: `chrome://extensions`
