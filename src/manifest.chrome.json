@@ -4,11 +4,11 @@
 	"version": "0.2.0",
 	"description": "Mute and blur ads on JioHotstar for a cleaner cricket experience.",
 	"icons": {
-		"16": "icon16.png",
-		"32": "icon32.png",
-		"64": "icon64.png",
-		"128": "icon128.png",
-		"256": "icon256.png"
+		"16": "icon-on-16.png",
+		"32": "icon-on-32.png",
+		"64": "icon-on-64.png",
+		"128": "icon-on-128.png",
+		"256": "icon-on-256.png"
 	},
 	"action": {
 		"default_popup": "src/popup/popup.html"

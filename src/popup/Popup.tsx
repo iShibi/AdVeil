@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import icon64 from '../../public/icon64.png';
+import icon64 from '../../public/icon-on-64.png';
 
 interface PopupProps {
 	savedBlurValue: number | undefined;
@@ -24,13 +24,28 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 
 	useEffect(() => {
 		chrome.storage.local.set({ isPaused });
+		if (isPaused) {
+			chrome.action.setIcon({
+				path: '/icon-off-64.png',
+			});
+		} else {
+			chrome.action.setIcon({
+				path: {
+					16: '/icon-on-16.png',
+					32: '/icon-on-32.png',
+					64: '/icon-on-64.png',
+					128: '/icon-on-128.png',
+					256: '/icon-on-256.png',
+				},
+			});
+		}
 	}, [isPaused]);
 
 	return (
 		<div className="w-full h-full flex flex-col gap-y-6 select-none">
 			<div className="flex flex-row px-6 pt-4 justify-between items-center">
 				<div className="flex flex-row items-center gap-x-2">
-					<img src={icon64} alt="AdVeil-icon64" className="w-6 h-6" />
+					<img src={icon64} alt="AdVeil-icon-on-64" className="w-6 h-6" />
 					<h1 className="text-lg font-extrabold font-mono">AdVeil</h1>
 				</div>
 				<div className="flex flex-row items-center gap-x-2">
@@ -40,7 +55,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 						onClick={() => setIsPaused(!isPaused)}
 						className="hover:cursor-pointer"
 					>
-						{isPaused ? <PlayIcon /> : <PauseIcon />}
+						{isPaused ? <ResumeIcon /> : <PauseIcon />}
 					</button>
 				</div>
 			</div>
@@ -136,7 +151,7 @@ function PauseIcon() {
 	);
 }
 
-function PlayIcon() {
+function ResumeIcon() {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
