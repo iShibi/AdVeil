@@ -25,6 +25,8 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 	useEffect(() => {
 		chrome.storage.local.set({ isPaused });
 		if (isPaused) {
+			document.documentElement.style.setProperty('--blur-value', '0px');
+			document.documentElement.style.setProperty('--opacity-value', '100%');
 			chrome.action.setIcon({
 				path: {
 					16: '/icon-off-16.png',
@@ -35,6 +37,8 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 				},
 			});
 		} else {
+			document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
+			document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 			chrome.action.setIcon({
 				path: {
 					16: '/icon-on-16.png',
@@ -87,8 +91,9 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 							min={0}
 							max={100}
 							value={blurValue}
+							disabled={isPaused}
 							onChange={e => setBlurValue(parseInt(e.target.value))}
-							className="w-full hover:cursor-pointer"
+							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
 
@@ -103,8 +108,9 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 							min={0}
 							max={100}
 							value={fadeValue}
+							disabled={isPaused}
 							onChange={e => setFadeValue(parseInt(e.target.value))}
-							className="w-full hover:cursor-pointer"
+							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
 				</div>
@@ -146,7 +152,7 @@ function PauseIcon() {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-6 h-6 hover:stroke-red-300"
+			className="w-6 h-6 hover:stroke-red-400"
 		>
 			<path
 				stroke-linecap="round"
@@ -165,7 +171,7 @@ function ResumeIcon() {
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			className="w-6 h-6 hover:stroke-green-300"
+			className="w-6 h-6 hover:stroke-green-400"
 		>
 			<path
 				stroke-linecap="round"
