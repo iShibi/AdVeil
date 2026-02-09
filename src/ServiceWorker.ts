@@ -5,7 +5,7 @@ const muteDurationEndBuffer = 150;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
 
-interface AdPlaybackStatus {
+export interface AdPlaybackStatus {
 	adPlaying: boolean;
 }
 
