@@ -17,13 +17,15 @@ chrome.webRequest.onBeforeRequest.addListener(
 			const searchParams = new URL(details.url).searchParams;
 			const adName = searchParams.get('adName');
 			if (adName) {
+				latestAdName = adName;
 				console.log(adName);
 				const duration = adName.match(adNameRegex)?.[1];
 				if (!duration) return console.log('Unable to parse ad duration.');
 				const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-				chrome.tabs.update(cricketTab.id, { muted: true });
-				chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: true });
-				latestAdName = adName;
+				if (!cricketTab.mutedInfo?.muted) {
+					chrome.tabs.update(cricketTab.id, { muted: true });
+					chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: true });
+				}
 				setTimeout(
 					() => {
 						// Skip unmuting and unbluring if another ad has started.
