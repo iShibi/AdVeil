@@ -1,3 +1,5 @@
+import type { AdPlaybackStatus } from './ServiceWorker';
+
 console.log("[Content] Loaded 'AdVeil' browser extension content script.");
 
 export interface LocalStorage {
@@ -11,10 +13,6 @@ async function init() {
 	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 }
 init();
-
-interface AdPlaybackStatus {
-	adPlaying: boolean;
-}
 
 async function toggleAdBlurring(message: AdPlaybackStatus) {
 	const videoElement = document.getElementById('video-container')!;
