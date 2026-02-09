@@ -1,4 +1,4 @@
-# ![AdVeil Icon](/public/icon32.png) AdVeil
+# ![AdVeil Icon](/public/icon-on-32.png) AdVeil
 
 > Mute and blur ads on [JioHotstar](https://www.hotstar.com) for a cleaner cricket experience.
 

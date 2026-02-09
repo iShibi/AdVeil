@@ -1,13 +1,11 @@
+import type { LocalStorage } from './Content';
+
 console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
 
 let latestAdName = '';
 const muteDurationEndBuffer = 150;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
-
-export interface AdPlaybackStatus {
-	adPlaying: boolean;
-}
 
 // Listen for outgoing requests
 chrome.webRequest.onBeforeRequest.addListener(
@@ -22,16 +20,17 @@ chrome.webRequest.onBeforeRequest.addListener(
 				const duration = adName.match(adNameRegex)?.[1];
 				if (!duration) return console.log('Unable to parse ad duration.');
 				const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-				if (!cricketTab.mutedInfo?.muted) {
+				const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
+				if (!isPaused && !cricketTab.mutedInfo?.muted) {
 					chrome.tabs.update(cricketTab.id, { muted: true });
-					chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: true });
 				}
+				chrome.storage.local.set<LocalStorage>({ isAdPlaying: true });
 				setTimeout(
 					() => {
 						// Skip unmuting and unbluring if another ad has started.
 						if (adName === latestAdName) {
 							chrome.tabs.update(cricketTab.id, { muted: false });
-							chrome.tabs.sendMessage<AdPlaybackStatus>(cricketTab.id!, { adPlaying: false });
+							chrome.storage.local.set<LocalStorage>({ isAdPlaying: false });
 						}
 					},
 					parseInt(duration) * 1000 + muteDurationEndBuffer,
@@ -42,3 +41,18 @@ chrome.webRequest.onBeforeRequest.addListener(
 	},
 	{ urls: ['*://*.hotstar.com/*'] },
 );
+
+chrome.storage.local.onChanged.addListener(async changes => {
+	if (Object.hasOwn(changes, 'isPaused')) {
+		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
+		const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
+		if (isPaused) {
+			chrome.tabs.update(cricketTab.id, { muted: false });
+		} else {
+			const { isAdPlaying } = await chrome.storage.local.get<LocalStorage>(['isAdPlaying']);
+			if (isAdPlaying) {
+				chrome.tabs.update(cricketTab.id, { muted: true });
+			}
+		}
+	}
+});

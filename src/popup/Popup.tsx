@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
-import icon64 from '../../public/icon64.png';
+import icon64 from '../../public/icon-on-64.png';
 
 interface PopupProps {
 	savedBlurValue: number | undefined;
 	savedFadeValue: number | undefined;
+	savedIsPausedValue: boolean | undefined;
 }
 
-export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
+export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: PopupProps) {
 	const [blurValue, setBlurValue] = useState(savedBlurValue ?? 0);
 	const [fadeValue, setFadeValue] = useState(savedFadeValue ?? 0);
+	const [isPaused, setIsPaused] = useState(savedIsPausedValue ?? false);
 
 	useEffect(() => {
 		chrome.storage.local.set({ blurValue });
@@ -20,11 +22,52 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 		document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 	}, [fadeValue]);
 
+	useEffect(() => {
+		chrome.storage.local.set({ isPaused });
+		if (isPaused) {
+			document.documentElement.style.setProperty('--blur-value', '0px');
+			document.documentElement.style.setProperty('--opacity-value', '100%');
+			chrome.action.setIcon({
+				path: {
+					16: '/icon-off-16.png',
+					32: '/icon-off-32.png',
+					64: '/icon-off-64.png',
+					128: '/icon-off-128.png',
+					256: '/icon-off-256.png',
+				},
+			});
+		} else {
+			document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
+			document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+			chrome.action.setIcon({
+				path: {
+					16: '/icon-on-16.png',
+					32: '/icon-on-32.png',
+					64: '/icon-on-64.png',
+					128: '/icon-on-128.png',
+					256: '/icon-on-256.png',
+				},
+			});
+		}
+	}, [isPaused]);
+
 	return (
 		<div className="w-full h-full flex flex-col gap-y-6 select-none">
-			<div className="flex flex-row pl-6 pt-4 items-center gap-x-2">
-				<img src={icon64} alt="AdVeil-icon64" className="w-6 h-6" />
-				<h1 className="text-lg font-extrabold font-mono">AdVeil</h1>
+			<div className="flex flex-row px-6 pt-4 justify-between items-center">
+				<div className="flex flex-row items-center gap-x-2">
+					<img src={icon64} alt="AdVeil-icon-on-64" className="w-6 h-6" />
+					<h1 className="text-lg font-extrabold font-mono">AdVeil</h1>
+				</div>
+				<div className="flex flex-row items-center gap-x-2">
+					<button
+						type="button"
+						title={isPaused ? 'Resume AdVeil Extension' : 'Pause AdVeil Extension'}
+						onClick={() => setIsPaused(!isPaused)}
+						className="hover:cursor-pointer"
+					>
+						{isPaused ? <ResumeIcon /> : <PauseIcon />}
+					</button>
+				</div>
 			</div>
 
 			<div className="flex flex-col gap-y-5">
@@ -48,8 +91,9 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 							min={0}
 							max={100}
 							value={blurValue}
+							disabled={isPaused}
 							onChange={e => setBlurValue(parseInt(e.target.value))}
-							className="w-full hover:cursor-pointer"
+							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
 
@@ -64,8 +108,9 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 							min={0}
 							max={100}
 							value={fadeValue}
+							disabled={isPaused}
 							onChange={e => setFadeValue(parseInt(e.target.value))}
-							className="w-full hover:cursor-pointer"
+							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
 				</div>
@@ -96,5 +141,43 @@ export function Popup({ savedBlurValue, savedFadeValue }: PopupProps) {
 				</a>
 			</div>
 		</div>
+	);
+}
+
+function PauseIcon() {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			className="w-6 h-6 hover:stroke-red-400"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M14.25 9v6m-4.5 0V9M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+			/>
+		</svg>
+	);
+}
+
+function ResumeIcon() {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke-width="1.5"
+			stroke="currentColor"
+			className="w-6 h-6 hover:stroke-green-400"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
+			/>
+		</svg>
 	);
 }
