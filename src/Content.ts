@@ -27,12 +27,17 @@ async function toggleAdBlurring(message: AdPlaybackStatus) {
 
 chrome.runtime.onMessage.addListener(toggleAdBlurring);
 
-async function updateFilterValues() {
-	const { blurValue, fadeValue } = await chrome.storage.local.get<LocalStorage>(['blurValue', 'fadeValue']);
-	document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
-	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+async function updateFilterValues(changes: { [key: string]: chrome.storage.StorageChange }) {
+	if (Object.hasOwn(changes, 'blurValue')) {
+		const blurValue = changes['blurValue'].newValue as LocalStorage['blurValue'];
+		document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
+	}
+	if (Object.hasOwn(changes, 'fadeValue')) {
+		const fadeValue = changes['fadeValue'].newValue as LocalStorage['fadeValue'];
+		document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+	}
 }
 
-chrome.storage.local.onChanged.addListener(() => {
-	updateFilterValues();
+chrome.storage.local.onChanged.addListener(changes => {
+	updateFilterValues(changes);
 });
