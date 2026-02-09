@@ -26,7 +26,13 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 		chrome.storage.local.set({ isPaused });
 		if (isPaused) {
 			chrome.action.setIcon({
-				path: '/icon-off-64.png',
+				path: {
+					16: '/icon-off-16.png',
+					32: '/icon-off-32.png',
+					64: '/icon-off-64.png',
+					128: '/icon-off-128.png',
+					256: '/icon-off-256.png',
+				},
 			});
 		} else {
 			chrome.action.setIcon({
