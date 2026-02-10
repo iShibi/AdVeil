@@ -1,11 +1,38 @@
 import type { LocalStorage } from './Content';
 
-console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
-
 let latestAdName = '';
 const muteDurationEndBuffer = 150;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
+
+chrome.runtime.onStartup.addListener(init);
+chrome.runtime.onInstalled.addListener(init);
+
+async function init() {
+	console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
+	const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
+	if (isPaused) {
+		chrome.action.setIcon({
+			path: {
+				16: '/icon-off-16.png',
+				32: '/icon-off-32.png',
+				64: '/icon-off-64.png',
+				128: '/icon-off-128.png',
+				256: '/icon-off-256.png',
+			},
+		});
+	} else {
+		chrome.action.setIcon({
+			path: {
+				16: '/icon-on-16.png',
+				32: '/icon-on-32.png',
+				64: '/icon-on-64.png',
+				128: '/icon-on-128.png',
+				256: '/icon-on-256.png',
+			},
+		});
+	}
+}
 
 // Listen for outgoing requests
 chrome.webRequest.onBeforeRequest.addListener(
