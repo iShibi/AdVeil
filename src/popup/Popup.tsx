@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import icon64 from '../../public/icon-on-64.png';
+import iconOff64 from '../../public/icon-off-64.png';
+import iconOn64 from '../../public/icon-on-64.png';
 
 interface PopupProps {
 	savedBlurValue: number | undefined;
@@ -55,7 +56,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 		<div className="w-full h-full flex flex-col gap-y-6 select-none">
 			<div className="flex flex-row px-6 pt-4 justify-between items-center">
 				<div className="flex flex-row items-center gap-x-2">
-					<img src={icon64} alt="AdVeil-icon-on-64" className="w-6 h-6" />
+					<img src={isPaused ? iconOff64 : iconOn64} alt="AdVeil Icon" className="w-6 h-6" />
 					<h1 className="text-lg font-extrabold font-mono">AdVeil</h1>
 				</div>
 				<div className="flex flex-row items-center gap-x-2">
@@ -72,8 +73,12 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 
 			<div className="flex flex-col gap-y-5">
 				<div className="flex flex-row justify-center">
-					<div className="h-28 w-28 shadow-lg overflow-hidden rounded-full my-2 flex flex-row justify-center border-2 border-dashed border-stone-400">
-						<button className="hover:cursor-pointer h-28 w-28 shadow-lg bg-green-500 rounded-full text-2xl blur-(--blur-value) opacity-(--opacity-value)">
+					<div
+						className={`h-28 w-28 shadow-lg overflow-hidden rounded-full my-2 flex flex-row justify-center border-2 border-dashed ${isPaused ? 'border-stone-400' : 'border-green-400'} transition duration-300 ease-out`}
+					>
+						<button
+							className={`hover:cursor-pointer h-28 w-28 shadow-lg rounded-full text-2xl blur-(--blur-value) opacity-(--opacity-value) ${isPaused ? 'bg-stone-400' : 'bg-green-400 text-stone-800'} transition duration-300 ease-out`}
+						>
 							Preview
 						</button>
 					</div>
