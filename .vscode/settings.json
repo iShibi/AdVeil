@@ -2,7 +2,7 @@
 	"editor.quickSuggestions": {
 		"strings": true
 	},
-	// "typescript.preferences.quoteStyle": "single",
+	"typescript.preferences.quoteStyle": "single",
 	"javascript.preferences.quoteStyle": "single",
 	"files.eol": "\n",
 	"editor.tabSize": 2,
@@ -27,8 +27,12 @@
 	},
 	"json.schemas": [
 		{
-			"fileMatch": ["manifest.*.json"],
+			"fileMatch": ["manifest.chrome.json"],
 			"url": "https://json.schemastore.org/chrome-manifest.json"
+		},
+		{
+			"fileMatch": ["manifest.firefox.json"],
+			"url": "https://www.schemastore.org/webextension.json"
 		}
 	],
 	"eslint.useFlatConfig": true
