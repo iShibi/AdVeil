@@ -38,6 +38,12 @@ export default defineConfig({
 				Content: resolve(__dirname, 'src/Content.ts'),
 			},
 			output: {
+				assetFileNames: assetInfo => {
+					if (assetInfo.names[0].endsWith('.css')) {
+						return 'assets/output.css';
+					}
+					return 'assets/[name].[hash][extname]';
+				},
 				entryFileNames: '[name].js',
 				chunkFileNames: 'chunks/[name].js',
 			},

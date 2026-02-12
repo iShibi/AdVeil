@@ -1,5 +1,3 @@
-console.log("[Content] Loaded 'AdVeil' browser extension content script.");
-
 export interface LocalStorage {
 	blurValue: number | undefined;
 	fadeValue: number | undefined;
@@ -7,23 +5,42 @@ export interface LocalStorage {
 	isAdPlaying: boolean | undefined;
 }
 
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', init);
+} else {
+	init();
+}
+
 async function init() {
+	console.log("[Content] Loaded 'AdVeil' browser extension content script.");
 	const { blurValue, fadeValue } = await chrome.storage.local.get<LocalStorage>(['blurValue', 'fadeValue']);
 	document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
 	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 }
-init();
+
+const observerForAcceptedSubmmission = new MutationObserver((_, thisObserver) => {
+	const videoContainer = document.getElementById('video-container');
+	if (videoContainer) {
+		videoContainer.classList.add('__ad_filter_transition');
+		thisObserver.disconnect();
+	}
+});
+
+observerForAcceptedSubmmission.observe(document.body, {
+	childList: true,
+	subtree: true,
+});
 
 chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'isPaused')) {
 		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
-		const videoElement = document.getElementById('video-container')!;
+		const videoContainer = document.getElementById('video-container')!;
 		if (isPaused) {
-			videoElement.style = 'filter: blur(0px) opacity(100%)';
+			videoContainer.classList.remove('__ad_filter');
 		} else {
 			const { isAdPlaying } = await chrome.storage.local.get<LocalStorage>(['isAdPlaying']);
 			if (isAdPlaying) {
-				videoElement.style = `filter: blur(var(--blur-value)) opacity(var(--opacity-value))`;
+				videoContainer.classList.add('__ad_filter');
 			}
 		}
 	}
@@ -45,11 +62,11 @@ chrome.storage.local.onChanged.addListener(async changes => {
 });
 
 async function toggleAdBlurring(isAdPlaying: boolean) {
-	const videoElement = document.getElementById('video-container')!;
+	const videoContainer = document.getElementById('video-container')!;
 	const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
 	if (!isPaused && isAdPlaying) {
-		videoElement.style = `filter: blur(var(--blur-value)) opacity(var(--opacity-value))`;
+		videoContainer.classList.add('__ad_filter');
 	} else {
-		videoElement.style = 'filter: blur(0px) opacity(100%)';
+		videoContainer.classList.remove('__ad_filter');
 	}
 }

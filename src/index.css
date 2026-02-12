@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+.__ad_filter_transition {
+	transition: 300ms ease-in-out !important;
+}
+
+.__ad_filter {
+	filter: blur(var(--blur-value)) opacity(var(--opacity-value)) !important;
+}
