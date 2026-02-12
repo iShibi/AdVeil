@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "AdVeil",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Mute and blur ads on JioHotstar for a cleaner cricket experience.",
 	"browser_specific_settings": {
 		"gecko": {
