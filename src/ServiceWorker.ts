@@ -32,6 +32,9 @@ async function init() {
 			},
 		});
 	}
+	const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
+	if (!cricketTab?.id) return console.log('Unable to get the cricket tab.');
+	chrome.tabs.reload(cricketTab.id);
 }
 
 // Listen for outgoing requests
