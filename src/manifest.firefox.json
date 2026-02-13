@@ -29,8 +29,9 @@
 	},
 	"content_scripts": [
 		{
+			"matches": ["*://*.hotstar.com/*"],
 			"js": ["Content.js"],
-			"matches": ["*://*.hotstar.com/*"]
+			"css": ["assets/output.css"]
 		}
 	]
 }
