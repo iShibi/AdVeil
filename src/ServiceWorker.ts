@@ -1,7 +1,6 @@
 import type { LocalStorage } from './Content';
 
 let latestAdName = '';
-const muteDurationEndBuffer = 150;
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
 const adNameRegex = /(?:_|^)(\d{2})(?:s)?(?=$|_)/;
 
@@ -64,7 +63,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 							chrome.storage.local.set<LocalStorage>({ isAdPlaying: false });
 						}
 					},
-					parseInt(duration) * 1000 + muteDurationEndBuffer,
+					parseInt(duration) * 1000,
 				);
 			}
 		}
