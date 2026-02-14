@@ -1,9 +1,4 @@
-export interface LocalStorage {
-	blurValue: number | undefined;
-	fadeValue: number | undefined;
-	isPaused: boolean | undefined;
-	isAdPlaying: boolean | undefined;
-}
+import type { LocalStorage } from './types';
 
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', init);
@@ -34,15 +29,7 @@ observerForAcceptedSubmmission.observe(document.body, {
 chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'isPaused')) {
 		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
-		const videoContainer = document.getElementById('video-container')!;
-		if (isPaused) {
-			videoContainer.classList.remove('__ad_filter');
-		} else {
-			const { isAdPlaying } = await chrome.storage.local.get<LocalStorage>(['isAdPlaying']);
-			if (isAdPlaying) {
-				videoContainer.classList.add('__ad_filter');
-			}
-		}
+		togglePause(isPaused ?? false);
 	}
 
 	if (Object.hasOwn(changes, 'blurValue')) {
@@ -57,11 +44,23 @@ chrome.storage.local.onChanged.addListener(async changes => {
 
 	if (Object.hasOwn(changes, 'isAdPlaying')) {
 		const isAdPlaying = changes['isAdPlaying'].newValue as LocalStorage['isAdPlaying'];
-		toggleAdBlurring(isAdPlaying ?? false);
+		toggleAdFilters(isAdPlaying ?? false);
 	}
 });
 
-async function toggleAdBlurring(isAdPlaying: boolean) {
+async function togglePause(isPaused: boolean) {
+	const videoContainer = document.getElementById('video-container')!;
+	if (isPaused) {
+		videoContainer.classList.remove('__ad_filter');
+	} else {
+		const { isAdPlaying } = await chrome.storage.local.get<LocalStorage>(['isAdPlaying']);
+		if (isAdPlaying) {
+			videoContainer.classList.add('__ad_filter');
+		}
+	}
+}
+
+async function toggleAdFilters(isAdPlaying: boolean) {
 	const videoContainer = document.getElementById('video-container')!;
 	const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
 	if (!isPaused && isAdPlaying) {

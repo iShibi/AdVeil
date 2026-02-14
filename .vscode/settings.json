@@ -10,8 +10,8 @@
 	"editor.detectIndentation": false,
 	"files.insertFinalNewline": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll": "always",
-		"source.organizeImports": "always"
+		"source.fixAll.eslint": "explicit",
+		"source.organizeImports": "explicit"
 	},
 	"editor.formatOnSave": true,
 	"typescript.tsdk": "node_modules\\typescript\\lib",
@@ -35,5 +35,6 @@
 			"url": "https://www.schemastore.org/webextension.json"
 		}
 	],
-	"eslint.useFlatConfig": true
+	"eslint.useFlatConfig": true,
+	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }

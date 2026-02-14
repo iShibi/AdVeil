@@ -6,6 +6,10 @@
 		"module": "esnext",
 		"types": ["vite/client", "chrome"],
 		"skipLibCheck": false,
+		"paths": {
+			"react": ["./node_modules/preact/compat/"],
+			"react-dom": ["./node_modules/preact/compat/"]
+		},
 		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
@@ -13,6 +17,7 @@
 		"moduleDetection": "force",
 		"noEmit": true,
 		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
 		/* Linting */
 		"strict": true,
 		"noUnusedLocals": true,

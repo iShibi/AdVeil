@@ -1,5 +1,5 @@
+import preact from '@preact/preset-vite';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
 import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,7 +27,7 @@ function copyManifestPlugin() {
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), tailwindcss(), copyManifestPlugin()],
+	plugins: [preact(), tailwindcss(), copyManifestPlugin()],
 	build: {
 		outDir: 'dist/firefox',
 		emptyOutDir: true,
