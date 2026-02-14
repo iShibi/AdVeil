@@ -1,4 +1,5 @@
-import type { LocalStorage } from './Content';
+import type { LocalStorage } from './types';
+import { setIcon } from './utils';
 
 let latestAdName = '';
 const cricketTabUrl = '*://*.hotstar.com/in/sports/cricket/*';
@@ -11,25 +12,9 @@ async function init() {
 	console.log('[ServiceWorker] Loaded "AdVeil" browser extension ServiceWorker script.');
 	const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
 	if (isPaused) {
-		chrome.action.setIcon({
-			path: {
-				16: '/icon-off-16.png',
-				32: '/icon-off-32.png',
-				64: '/icon-off-64.png',
-				128: '/icon-off-128.png',
-				256: '/icon-off-256.png',
-			},
-		});
+		setIcon('off');
 	} else {
-		chrome.action.setIcon({
-			path: {
-				16: '/icon-on-16.png',
-				32: '/icon-on-32.png',
-				64: '/icon-on-64.png',
-				128: '/icon-on-128.png',
-				256: '/icon-on-256.png',
-			},
-		});
+		setIcon('on');
 	}
 	const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
 	if (!cricketTab?.id) return console.log('Unable to get the cricket tab.');
@@ -49,7 +34,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 				const duration = adName.match(adNameRegex)?.[1];
 				if (!duration) return console.log('Unable to parse ad duration.');
 				const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-				if (!cricketTab) return console.log('Unable to get the cricket tab.');
+				if (!cricketTab.id) return console.log('Unable to get the cricket tab.');
 				const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
 				if (!isPaused && !cricketTab.mutedInfo?.muted) {
 					chrome.tabs.update(cricketTab.id, { muted: true });
@@ -76,7 +61,7 @@ chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'isPaused')) {
 		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
 		const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-		if (!cricketTab) return console.log('Unable to get the cricket tab.');
+		if (!cricketTab.id) return console.log('Unable to get the cricket tab.');
 		if (isPaused) {
 			chrome.tabs.update(cricketTab.id, { muted: false });
 		} else {

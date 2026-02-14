@@ -1,9 +1,4 @@
-export interface LocalStorage {
-	blurValue: number | undefined;
-	fadeValue: number | undefined;
-	isPaused: boolean | undefined;
-	isAdPlaying: boolean | undefined;
-}
+import type { LocalStorage } from './types';
 
 if (document.readyState === 'loading') {
 	document.addEventListener('DOMContentLoaded', init);
@@ -57,16 +52,12 @@ chrome.storage.local.onChanged.addListener(async changes => {
 
 	if (Object.hasOwn(changes, 'isAdPlaying')) {
 		const isAdPlaying = changes['isAdPlaying'].newValue as LocalStorage['isAdPlaying'];
-		toggleAdBlurring(isAdPlaying ?? false);
+		const videoContainer = document.getElementById('video-container')!;
+		const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
+		if (!isPaused && isAdPlaying) {
+			videoContainer.classList.add('__ad_filter');
+		} else {
+			videoContainer.classList.remove('__ad_filter');
+		}
 	}
 });
-
-async function toggleAdBlurring(isAdPlaying: boolean) {
-	const videoContainer = document.getElementById('video-container')!;
-	const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
-	if (!isPaused && isAdPlaying) {
-		videoContainer.classList.add('__ad_filter');
-	} else {
-		videoContainer.classList.remove('__ad_filter');
-	}
-}
