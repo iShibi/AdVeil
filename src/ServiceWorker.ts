@@ -34,7 +34,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 				const duration = adName.match(adNameRegex)?.[1];
 				if (!duration) return console.log('Unable to parse ad duration.');
 				const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-				if (!cricketTab.id) return console.log('Unable to get the cricket tab.');
+				if (!cricketTab?.id) return console.log('Unable to get the cricket tab.');
 				const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
 				if (!isPaused && !cricketTab.mutedInfo?.muted) {
 					chrome.tabs.update(cricketTab.id, { muted: true });
@@ -61,7 +61,7 @@ chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'isPaused')) {
 		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
 		const cricketTab = (await chrome.tabs.query({ url: cricketTabUrl }))[0];
-		if (!cricketTab.id) return console.log('Unable to get the cricket tab.');
+		if (!cricketTab?.id) return console.log('Unable to get the cricket tab.');
 		if (isPaused) {
 			chrome.tabs.update(cricketTab.id, { muted: false });
 		} else {

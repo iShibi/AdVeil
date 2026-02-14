@@ -8,9 +8,14 @@ if (document.readyState === 'loading') {
 
 async function init() {
 	console.log("[Content] Loaded 'AdVeil' browser extension content script.");
-	const { blurValue, fadeValue } = await chrome.storage.local.get<LocalStorage>(['blurValue', 'fadeValue']);
+	const { blurValue, fadeValue, grayscaleValue } = await chrome.storage.local.get<LocalStorage>([
+		'blurValue',
+		'fadeValue',
+		'grayscaleValue',
+	]);
 	document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
 	document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+	document.documentElement.style.setProperty('--grayscale-value', `${grayscaleValue ?? 0}%`);
 }
 
 const observerForAcceptedSubmmission = new MutationObserver((_, thisObserver) => {
@@ -48,6 +53,11 @@ chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'fadeValue')) {
 		const fadeValue = changes['fadeValue'].newValue as LocalStorage['fadeValue'];
 		document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
+	}
+
+	if (Object.hasOwn(changes, 'grayscaleValue')) {
+		const grayscaleValue = changes['grayscaleValue'].newValue as LocalStorage['grayscaleValue'];
+		document.documentElement.style.setProperty('--grayscale-value', `${grayscaleValue ?? 0}%`);
 	}
 
 	if (Object.hasOwn(changes, 'isAdPlaying')) {

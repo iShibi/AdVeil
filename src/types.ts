@@ -3,4 +3,5 @@ export interface LocalStorage {
 	fadeValue: number | undefined;
 	isPaused: boolean | undefined;
 	isAdPlaying: boolean | undefined;
+	grayscaleValue: number | undefined;
 }
