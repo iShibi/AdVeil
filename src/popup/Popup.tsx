@@ -9,12 +9,14 @@ interface PopupProps {
 	savedBlurValue: number | undefined;
 	savedFadeValue: number | undefined;
 	savedIsPausedValue: boolean | undefined;
+	savedGrayscaleValue: number | undefined;
 }
 
-export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: PopupProps) {
+export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue, savedGrayscaleValue }: PopupProps) {
 	const [blurValue, setBlurValue] = useState(savedBlurValue ?? 0);
 	const [fadeValue, setFadeValue] = useState(savedFadeValue ?? 0);
 	const [isPaused, setIsPaused] = useState(savedIsPausedValue ?? false);
+	const [grayscaleValue, setGrayscaleValue] = useState(savedGrayscaleValue ?? 0);
 
 	useEffect(() => {
 		chrome.storage.local.set({ blurValue });
@@ -25,6 +27,11 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 		chrome.storage.local.set({ fadeValue });
 		document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 	}, [fadeValue]);
+
+	useEffect(() => {
+		chrome.storage.local.set({ grayscaleValue });
+		document.documentElement.style.setProperty('--grayscale-value', `${grayscaleValue ?? 0}%`);
+	}, [grayscaleValue]);
 
 	useEffect(() => {
 		chrome.storage.local.set({ isPaused });
@@ -68,7 +75,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 						className={`my-2 flex h-28 w-28 flex-row justify-center overflow-hidden rounded-full border-2 border-dashed shadow-lg ${isPaused ? 'border-stone-400' : 'border-green-400'} transition duration-300 ease-out`}
 					>
 						<button
-							className={`h-28 w-28 rounded-full text-2xl opacity-(--opacity-value) shadow-lg blur-(--blur-value) hover:cursor-pointer ${isPaused ? 'bg-stone-400' : 'bg-green-400 text-stone-800'} transition duration-300 ease-out`}
+							className={`h-28 w-28 rounded-full text-2xl opacity-(--opacity-value) shadow-lg blur-(--blur-value) grayscale-(--grayscale-value) hover:cursor-pointer ${isPaused ? 'bg-stone-400' : 'bg-green-400 text-stone-800'} transition duration-300 ease-out`}
 						>
 							Preview
 						</button>
@@ -106,6 +113,23 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue }: Po
 							value={fadeValue}
 							disabled={isPaused}
 							onInput={e => setFadeValue(parseInt(e.currentTarget.value))}
+							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
+						/>
+					</label>
+
+					<label htmlFor='grayscale-value' className='flex flex-col gap-y-2'>
+						<div className='w-fit rounded-md bg-stone-800 px-2 py-1 shadow-md'>
+							<h1>Grayscale: {grayscaleValue}</h1>
+						</div>
+						<input
+							type='range'
+							name='grayscale-value'
+							id='grayscale-value'
+							min={0}
+							max={100}
+							value={grayscaleValue}
+							disabled={isPaused}
+							onInput={e => setGrayscaleValue(parseInt(e.currentTarget.value))}
 							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>

@@ -5,5 +5,5 @@
 }
 
 .__ad_filter {
-	filter: blur(var(--blur-value)) opacity(var(--opacity-value)) !important;
+	filter: blur(var(--blur-value)) opacity(var(--opacity-value)) grayscale(var(--grayscale-value)) !important;
 }
