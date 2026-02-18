@@ -33,8 +33,9 @@ observerForAcceptedSubmmission.observe(document.body, {
 
 chrome.storage.local.onChanged.addListener(async changes => {
 	if (Object.hasOwn(changes, 'isPaused')) {
-		const isPaused = changes['isPaused'].newValue as LocalStorage['isPaused'];
-		const videoContainer = document.getElementById('video-container')!;
+		const isPaused = changes.isPaused.newValue as LocalStorage['isPaused'];
+		const videoContainer = document.getElementById('video-container');
+		if (!videoContainer) return console.log('Unable to get #video-container element');
 		if (isPaused) {
 			videoContainer.classList.remove('__ad_filter');
 		} else {
@@ -46,24 +47,25 @@ chrome.storage.local.onChanged.addListener(async changes => {
 	}
 
 	if (Object.hasOwn(changes, 'blurValue')) {
-		const blurValue = changes['blurValue'].newValue as LocalStorage['blurValue'];
+		const blurValue = changes.blurValue.newValue as LocalStorage['blurValue'];
 		document.documentElement.style.setProperty('--blur-value', `${blurValue ?? 0}px`);
 	}
 
 	if (Object.hasOwn(changes, 'fadeValue')) {
-		const fadeValue = changes['fadeValue'].newValue as LocalStorage['fadeValue'];
+		const fadeValue = changes.fadeValue.newValue as LocalStorage['fadeValue'];
 		document.documentElement.style.setProperty('--opacity-value', `${100 - (fadeValue ?? 0)}%`);
 	}
 
 	if (Object.hasOwn(changes, 'grayscaleValue')) {
-		const grayscaleValue = changes['grayscaleValue'].newValue as LocalStorage['grayscaleValue'];
+		const grayscaleValue = changes.grayscaleValue.newValue as LocalStorage['grayscaleValue'];
 		document.documentElement.style.setProperty('--grayscale-value', `${grayscaleValue ?? 0}%`);
 	}
 
 	if (Object.hasOwn(changes, 'isAdPlaying')) {
-		const isAdPlaying = changes['isAdPlaying'].newValue as LocalStorage['isAdPlaying'];
-		const videoContainer = document.getElementById('video-container')!;
+		const isAdPlaying = changes.isAdPlaying.newValue as LocalStorage['isAdPlaying'];
+		const videoContainer = document.getElementById('video-container');
 		const { isPaused } = await chrome.storage.local.get<LocalStorage>(['isPaused']);
+		if (!videoContainer) return console.log('Unable to get #video-container element');
 		if (!isPaused && isAdPlaying) {
 			videoContainer.classList.add('__ad_filter');
 		} else {

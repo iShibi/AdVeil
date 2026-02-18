@@ -12,28 +12,23 @@
 		"build:firefox": "tsc -b && vite build --config vite.config.firefox.ts",
 		"build:chrome": "tsc -b && vite build --config vite.config.chrome.ts",
 		"build:all": "npm run build:firefox && npm run build:chrome",
-		"lint": "eslint .",
-		"format:check": "prettier . --check",
-		"format:write": "prettier . --write"
+		"lint:check": "biome lint",
+		"lint:write": "biome lint --write",
+		"format:check": "biome format",
+		"format:write": "biome format --write"
 	},
 	"dependencies": {
 		"preact": "^10.28.3"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.2",
+		"@biomejs/biome": "2.4.2",
 		"@preact/preset-vite": "^2.10.3",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/chrome": "^0.1.36",
 		"@types/node": "^24.10.1",
-		"eslint": "^9.39.2",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-react-hooks": "^7.0.1",
 		"globals": "^17.1.0",
-		"prettier": "3.8.1",
-		"prettier-plugin-tailwindcss": "^0.7.2",
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.53.1",
 		"vite": "^7.2.4"
 	},
 	"type": "module",
