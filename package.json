@@ -26,7 +26,6 @@
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/chrome": "^0.1.36",
 		"@types/node": "^24.10.1",
-		"globals": "^17.1.0",
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.9.3",
 		"vite": "^7.2.4"
