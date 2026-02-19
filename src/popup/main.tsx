@@ -19,5 +19,6 @@ render(
 		savedIsPausedValue={isPaused}
 		savedGrayscaleValue={grayscaleValue}
 	/>,
+	// biome-ignore lint/style/noNonNullAssertion: this is always non-null
 	document.getElementById('root')!,
 );

@@ -75,6 +75,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue, save
 						className={`my-2 flex h-28 w-28 flex-row justify-center overflow-hidden rounded-full border-2 border-dashed shadow-lg ${isPaused ? 'border-stone-400' : 'border-green-400'} transition duration-300 ease-out`}
 					>
 						<button
+							type='button'
 							className={`h-28 w-28 rounded-full text-2xl opacity-(--opacity-value) shadow-lg blur-(--blur-value) grayscale-(--grayscale-value) hover:cursor-pointer ${isPaused ? 'bg-stone-400' : 'bg-green-400 text-stone-800'} transition duration-300 ease-out`}
 						>
 							Preview
@@ -95,7 +96,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue, save
 							max={100}
 							value={blurValue}
 							disabled={isPaused}
-							onInput={e => setBlurValue(parseInt(e.currentTarget.value))}
+							onInput={e => setBlurValue(parseInt(e.currentTarget.value, 10))}
 							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
@@ -112,7 +113,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue, save
 							max={100}
 							value={fadeValue}
 							disabled={isPaused}
-							onInput={e => setFadeValue(parseInt(e.currentTarget.value))}
+							onInput={e => setFadeValue(parseInt(e.currentTarget.value, 10))}
 							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
@@ -129,7 +130,7 @@ export function Popup({ savedBlurValue, savedFadeValue, savedIsPausedValue, save
 							max={100}
 							value={grayscaleValue}
 							disabled={isPaused}
-							onInput={e => setGrayscaleValue(parseInt(e.currentTarget.value))}
+							onInput={e => setGrayscaleValue(parseInt(e.currentTarget.value, 10))}
 							className={`w-full ${isPaused ? 'hover:cursor-not-allowed' : 'hover:cursor-pointer'}`}
 						/>
 					</label>
