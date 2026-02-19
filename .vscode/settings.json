@@ -1,22 +1,23 @@
 {
-	"editor.quickSuggestions": {
-		"strings": true
-	},
 	"editor.defaultFormatter": "biomejs.biome",
-	"editor.formatOnSave": true,
-	"typescript.preferences.quoteStyle": "single",
-	"javascript.preferences.quoteStyle": "single",
-	"files.eol": "\n",
-	"editor.tabSize": 2,
-	"editor.insertSpaces": false,
 	"editor.detectIndentation": true,
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"files.eol": "\n",
 	"files.insertFinalNewline": true,
+	"javascript.preferences.quoteStyle": "single",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.preferences.quoteStyle": "single",
+	"typescript.tsdk": "node_modules\\typescript\\lib",
 	"editor.codeActionsOnSave": {
+		"source.action.useSortedKeys.biome": "explicit",
 		"source.fixAll.biome": "explicit",
 		"source.organizeImports.biome": "explicit"
 	},
-	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"editor.quickSuggestions": {
+		"strings": true
+	},
 	"json.schemas": [
 		{
 			"fileMatch": ["manifest.chrome.json"],
